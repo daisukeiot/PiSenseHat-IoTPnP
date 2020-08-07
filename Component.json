@@ -1,0 +1,22 @@
+{
+    "@context": "dtmi:dtdl:context;2",
+    "@id": "dtmi:Pi:SenseHatController;1",
+    "@type": "Interface",
+    "displayName": "SenseHatController",
+    "description": "Pi with SenseHat.",
+    "contents": [    {
+        "@type" : "Component",
+        "schema": "dtmi:Pi:SenseHat;1",
+        "name": "SenseHat",
+        "displayName": "SenseHat Board",
+        "description": "Temp + Humi +IMU"
+      },
+      {
+        "@type": "Component",
+        "schema": "dtmi:Pi:mainboard;1",
+        "name": "PIdeviceInformation",
+        "displayName": "PI Device Information interface",
+        "description": "Optional interface with basic device hardware information."
+      }
+    ]
+  }
