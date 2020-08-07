@@ -9,7 +9,7 @@
         "schema": "dtmi:Pi:SenseHat;1",
         "name": "SenseHat",
         "displayName": "SenseHat Board",
-        "description": "Temp + Humi +IMU"
+        "description": "Temp + Humi +IMU data"
       },
       {
         "@type": "Component",
