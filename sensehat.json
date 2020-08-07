@@ -1,0 +1,100 @@
+{
+    "@context": "dtmi:dtdl:context;2",
+    "@id": "dtmi:Pi:SenseHat;1",
+    "@type": "Interface",
+    "displayName": "Pi SenseHat",
+    "description": "Report current sensor's data on SenseHat",
+    "contents": [
+      {
+          "@type": [
+            "Telemetry",
+            "temperature_HTS221"
+          ],
+          "name": "temperature_HTS221",
+          "schema": "double",
+          "unit": "degreeCelsius"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "temperature_LPS25H"
+        ],
+        "name": "temperature_LPS25H",
+        "schema": "double",
+        "unit": "degreeCelsius"
+    },
+      {
+          "@type": [
+            "Telemetry",
+            "Humidity"
+          ],
+          "name": "humidity",
+          "schema": "double",
+          "unit": "percent"
+      },
+      {
+          "@type": [
+            "Telemetry",
+            "pressure"
+          ],
+          "name": "pressure",
+          "schema": "double",
+          "unit": "kiloPascal"
+      },
+      {   
+          "@type": [
+            "Telemetry",
+            "IMU"
+          ],
+          "name": "IMU",
+          "schema": {
+               "@type": "Object",
+               "fields": [
+                   {
+                       "name": "X",
+                       "schema": "double"
+                   },
+                   {
+                       "name": "Y",
+                       "schema": "double"
+                   },
+                   {
+                       "name": "Z",
+                       "schema": "double"
+                   }
+                ]
+            }
+      },
+      {
+        "@type": [
+          "Property",
+          "CpuUsage"
+        ],
+        "name": "CpuUsage",
+        "schema": "double",
+        "displayName": "CpuUsage",
+        "description": "Cpu loading",
+        "unit" : "percent"
+      },
+      {
+        "@type": [
+          "Property",
+          "MemUsage"
+        ],
+        "name": "MemUsage",
+        "schema": "double",
+        "displayName": "MemUsage",
+        "description": "Sysytem memmory usuage",
+        "unit" : "percent"
+      },      
+      {
+          "@type": "Command",
+          "name": "show_message",
+          "commandType": "synchronous",
+          "request": {
+            "name": "message",
+            "schema": "string"
+          }
+      }
+    ]
+}
