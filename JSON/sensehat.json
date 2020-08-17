@@ -4,75 +4,26 @@
     "@type": "Interface",
     "displayName": "Pi SenseHat",
     "description": "Report current sensor's data on SenseHat",
-    "contents": [
-      {
-          "@type": [
-            "Telemetry",
-            "temperature_HTS221"
-          ],
-          "name": "temperature_HTS221",
-          "schema": "double",
-          "unit": "degreeCelsius"
-      },
-      {
-        "@type": [
-          "Telemetry",
-          "temperature_LPS25H"
-        ],
-        "name": "temperature_LPS25H",
-        "schema": "double",
-        "unit": "degreeCelsius"
+    "contents": [    {
+      "@type" : "Component",
+      "schema": "dtmi:Pi:HTS221;1",
+      "name": "HTS221",
+      "displayName": "HTS221 Sensor",
+      "description": "Temp + Humi data"
     },
-      {
-          "@type": [
-            "Telemetry",
-            "Humidity"
-          ],
-          "name": "humidity",
-          "schema": "double",
-          "unit": "percent"
-      },
-      {
-          "@type": [
-            "Telemetry",
-            "pressure"
-          ],
-          "name": "pressure",
-          "schema": "double",
-          "unit": "kiloPascal"
-      },
-      {   
-          "@type": [
-            "Telemetry",
-            "IMU"
-          ],
-          "name": "IMU",
-          "schema": {
-               "@type": "Object",
-               "fields": [
-                   {
-                       "name": "X",
-                       "schema": "double"
-                   },
-                   {
-                       "name": "Y",
-                       "schema": "double"
-                   },
-                   {
-                       "name": "Z",
-                       "schema": "double"
-                   }
-                ]
-            }
-      },    
-      {
-          "@type": "Command",
-          "name": "show_message",
-          "commandType": "synchronous",
-          "request": {
-            "name": "message",
-            "schema": "string"
-          }
-      }
-    ]
+    {
+      "@type": "Component",
+      "schema": "dtmi:Pi:LDS25H;1",
+      "name": "LDS25H",
+      "displayName": "LDS25H Sensor",
+      "description": "Temp + pressure data"
+    },
+    {
+      "@type": "Component",
+      "schema": "dtmi:Pi:LSM9DS1;1",
+      "name": "LSM9DS1",
+      "displayName": "LSM9DS1 Sensor",
+      "description": "IMU data"
+    }
+  ]
 }

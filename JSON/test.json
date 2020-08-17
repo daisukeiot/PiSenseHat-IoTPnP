@@ -1,0 +1,86 @@
+{
+	"@context": "dtmi:dtdl:context;2",
+	"@id": "dtmi:com:example:sensehat;1",
+	"@type": "Interface",
+	"displayName": "SenseHat",
+	"description": "test",
+	"contents": [
+		{
+			"@type": [
+				"Telemetry",
+				"Temperature"
+			],
+			"name": "temperature",
+			"displayName": "Temperature from HTS221",
+			"description": "Temperature in degrees Celsius.",
+			"schema": "double",
+			"unit": "degreeCelsius"
+        },
+        {
+            "@type": [
+              "Telemetry",
+              "Humidity"
+            ],
+            "name": "humidity",
+            "displayName": "Humidity from HTS221",
+            "schema": "double",
+            "unit": "percent"
+        },
+        {
+			"@type": [
+				"Telemetry",
+				"Temperature_LPS25H"
+			],
+			"name": "temperature_LPS25H",
+			"displayName": "Temperature from LPS25H",
+			"description": "Temperature in degrees Fahrenheit",
+			"schema": "double",
+			"unit": "degreeFahrenheit"
+        },
+        {
+			"@type": [
+				"Telemetry",
+				"pressure"
+			],
+			"name": "pressure",
+			"displayName": "Pressure from LPS25H",
+			"description": "pressure",
+			"schema": "double",
+			"unit": "kilopascal"
+        },
+        {
+			"@type": "Telemetry",
+			"name": "IMU",
+			"displayName": "Orientation_radians",
+            "description": "IMU",
+            "unit": "RAW Data",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "Command",
+            "description": "This command will display a message on the Sense Hat LED display.",
+            "name": "show_message",
+            "commandType": "synchronous",
+            "request": {
+              "name": "message",
+              "schema": "string"
+            }
+        }
+	]
+}
