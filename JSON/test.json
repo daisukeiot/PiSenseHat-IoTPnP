@@ -19,7 +19,7 @@
         {
             "@type": [
               "Telemetry",
-              "Humidity"
+              "RelativeHumidity"
             ],
             "name": "humidity",
             "displayName": "Humidity from HTS221",
@@ -29,7 +29,7 @@
         {
 			"@type": [
 				"Telemetry",
-				"Temperature_LPS25H"
+				"Temperature"
 			],
 			"name": "temperature_LPS25H",
 			"displayName": "Temperature from LPS25H",
@@ -40,7 +40,7 @@
         {
 			"@type": [
 				"Telemetry",
-				"pressure"
+				"Pressure"
 			],
 			"name": "pressure",
 			"displayName": "Pressure from LPS25H",
@@ -49,11 +49,14 @@
 			"unit": "kilopascal"
         },
         {
-			"@type": "Telemetry",
+            "@type": [
+				"Telemetry",
+				"Angle"
+			],
 			"name": "IMU",
 			"displayName": "Orientation_radians",
             "description": "IMU",
-            "unit": "RAW Data",
+            "unit": "radian",
             "schema": {
                 "@type": "Object",
                 "fields": [
@@ -73,12 +76,66 @@
             }
         },
         {
+            "@type": "Property",
+            "name": "manufacturer",
+            "displayName": "Manufactured by",
+            "schema": "string",
+            "description": "OKdo Technology Limited",
+            "writable": false
+        },
+        {
+            "@type": "Property",
+            "name": "led_color",
+            "description": "Change LED matrix color by update property",
+            "writable": true,
+            "schema": {
+                "@type": "Enum",
+                "valueSchema": "string",
+                "enumValues": [
+                    {
+                        "name": "OFF",
+                        "displayName": "OFF",
+                        "enumValue": 0
+                    },
+                    {
+                        "name": "RED",
+                        "displayName": "RED",
+                        "enumValue": 1
+                    },
+                    {
+                        "name": "GREEN",
+                        "displayName": "GREEN",
+                        "enumValue": 2
+                    },
+                    {
+                        "name": "BLUE",
+                        "displayName": "BLUE",
+                        "enumValue": 3
+                    },
+                    {
+                        "name": "WHITE",
+                        "displayName": "WHITE",
+                        "enumValue": 4
+                    },
+                    {
+                        "name": "YELLOW",
+                        "displayName": "YELLOW",
+                        "enumValue": 5
+                    },
+                    {
+                        "name": "PURPLE",
+                        "displayName": "PURPLE",
+                        "enumValue": 6
+                    }
+                ]
+            }
+        },
+        {
             "@type": "Command",
-            "description": "This command will display a message on the Sense Hat LED display.",
-            "name": "show_message",
-            "commandType": "synchronous",
+            "description": "This command will display text on the SenseHat LED matrix.",
+            "name": "show_text",
             "request": {
-              "name": "message",
+              "name": "text_here",
               "schema": "string"
             }
         }
