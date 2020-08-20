@@ -56,7 +56,7 @@
 			],
 			"name": "lsm9ds1_accelerometer",
 			"displayName": "Accelerometer from IMU",
-			"description": "Pressure in kilo pascal from LPS25H",
+			"description": "Acceleration in Gs from LSM9DS1",
             "schema": {
                 "@type": "Object",
                 "fields": [
@@ -83,7 +83,7 @@
 			],
 			"name": "lsm9ds1_gyroscope",
 			"displayName": "Gyroscope from IMU",
-			"description": "Pressure in kilo pascal from LPS25H",
+			"description": "Gyroscope data in radian per second from LSM9DS1",
             "schema": {
                 "@type": "Object",
                 "fields": [
@@ -109,8 +109,8 @@
                 "MagneticInduction"
 			],
 			"name": "lsm9ds1_compass",
-			"displayName": "Pressure from LPS25H",
-			"description": "Pressure in kilo pascal from LPS25H",
+			"displayName": "Compass from LPS25H",
+			"description": "Compass data in microtesla from LSM9DS1",
             "schema": {
                 "@type": "Object",
                 "fields": [
