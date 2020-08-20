@@ -50,6 +50,87 @@
 			"unit": "kilopascal"
         },
         {
+			"@type": [
+                "Telemetry",
+                "Acceleration"	
+			],
+			"name": "lsm9ds1_accelerometer",
+			"displayName": "Accelerometer from IMU",
+			"description": "Pressure in kilo pascal from LPS25H",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "gForce"
+        },
+        {
+			"@type": [
+				"Telemetry",
+                "AngularVelocity"
+			],
+			"name": "lsm9ds1_gyroscope",
+			"displayName": "Gyroscope from IMU",
+			"description": "Pressure in kilo pascal from LPS25H",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "radianPerSecond"
+        },
+        {
+			"@type": [
+                "Telemetry",
+                "MagneticInduction"
+			],
+			"name": "lsm9ds1_compass",
+			"displayName": "Pressure from LPS25H",
+			"description": "Pressure in kilo pascal from LPS25H",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "tesla"
+        },
+        {
             "@type": [
 				"Telemetry",
 				"Angle"
