@@ -3,16 +3,16 @@
 	"@id": "dtmi:com:example:sensehat;1",
 	"@type": "Interface",
 	"displayName": "SenseHat",
-	"description": "test",
+	"description": "IoT Plug and Play device model for SenseHat",
 	"contents": [
 		{
 			"@type": [
 				"Telemetry",
 				"Temperature"
 			],
-			"name": "temperature",
+			"name": "temperature_hts221",
 			"displayName": "Temperature from HTS221",
-			"description": "Temperature in degrees Celsius.",
+			"description": "Temperature in degrees celsius from HTS221",
 			"schema": "double",
 			"unit": "degreeCelsius"
         },
@@ -23,6 +23,7 @@
             ],
             "name": "humidity",
             "displayName": "Humidity from HTS221",
+			"description": "Humidity in percent from HTS221",
             "schema": "double",
             "unit": "percent"
         },
@@ -31,9 +32,9 @@
 				"Telemetry",
 				"Temperature"
 			],
-			"name": "temperature_LPS25H",
+			"name": "temperature_lps25h",
 			"displayName": "Temperature from LPS25H",
-			"description": "Temperature in degrees Fahrenheit",
+			"description": "Temperature in degrees fahrenheit from LPS25H",
 			"schema": "double",
 			"unit": "degreeFahrenheit"
         },
@@ -44,19 +45,18 @@
 			],
 			"name": "pressure",
 			"displayName": "Pressure from LPS25H",
-			"description": "pressure",
+			"description": "Pressure in kilo pascal from LPS25H",
 			"schema": "double",
 			"unit": "kilopascal"
         },
         {
-            "@type": [
-				"Telemetry",
-				"Angle"
+			"@type": [
+                "Telemetry",
+                "Acceleration"	
 			],
-			"name": "IMU",
-			"displayName": "Orientation_radians",
-            "description": "IMU",
-            "unit": "radian",
+			"name": "lsm9ds1_accelerometer",
+			"displayName": "Accelerometer from IMU",
+			"description": "Acceleration in Gs from LSM9DS1",
             "schema": {
                 "@type": "Object",
                 "fields": [
@@ -70,6 +70,88 @@
                     },
                     {
                         "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "gForce"
+        },
+        {
+			"@type": [
+				"Telemetry",
+                "AngularVelocity"
+			],
+			"name": "lsm9ds1_gyroscope",
+			"displayName": "Gyroscope from IMU",
+			"description": "Gyroscope data in radian per second from LSM9DS1",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "radianPerSecond"
+        },
+        {
+			"@type": [
+                "Telemetry",
+                "MagneticInduction"
+			],
+			"name": "lsm9ds1_compass",
+			"displayName": "Compass from LPS25H",
+			"description": "Compass data in microtesla from LSM9DS1",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "tesla"
+        },
+        {
+            "@type": [
+				"Telemetry",
+				"Angle"
+			],
+			"name": "imu",
+			"displayName": "Orientation from IMU",
+            "description": "Orientation in radians from Inertial Measurement Unit sensor (LSM9DS1)",
+            "unit": "radian",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "yaw",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "roll",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "pitch",
                         "schema": "double"
                     }
                 ]
