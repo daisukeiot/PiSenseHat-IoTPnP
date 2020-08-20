@@ -138,7 +138,7 @@
 			"name": "imu",
 			"displayName": "Orientation from IMU",
             "description": "Orientation in radians from Inertial Measurement Unit sensor (LSM9DS1)",
-            "unit": "radian",
+            "unit": "degreeOfArc",
             "schema": {
                 "@type": "Object",
                 "fields": [
