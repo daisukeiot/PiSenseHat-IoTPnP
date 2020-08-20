@@ -18,6 +18,7 @@ from datetime import date, timedelta, datetime
 logging.basicConfig(level=logging.ERROR)
 sense = SenseHat()
 sense.clear()
+sense.set_imu_config(True, True, True)
 
 # This id can change according to the company the user is from
 # and the name user wants to call this pnp device
@@ -284,13 +285,16 @@ async def main():
         print("Sending telemetry for SenseHat")
 
         while True:
-            currentTemp = sense.get_temperature() 
+            temperature_hts221 = sense.get_temperature() 
             humidity = sense.get_humidity()
-            currentTemp_2 = ((sense.get_temperature_from_pressure()/5)*9)+32
+            temperature_lps25h = ((sense.get_temperature_from_pressure()/5)*9)+32
             pressure = sense.get_pressure()
-            orientation_rad = sense.get_orientation_radians()
+            orientation_deg = sense.get_orientation_degrees()
+            lsm9ds1_accelerometer = sense.get_accelerometer_raw()
+            lsm9ds1_gyroscope = sense.get_gyroscope_raw()
+            lsm9ds1_compass = sense.get_compass_raw()  
 
-            temperature_msg1 = {"temperature": currentTemp,"humidity": humidity,"temperature_LPS25H": currentTemp_2,"pressure": pressure,"IMU": orientation_rad}
+            temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_deg,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
             await send_telemetry_from_thermostat(device_client, temperature_msg1)
             await asyncio.sleep(8)
 
