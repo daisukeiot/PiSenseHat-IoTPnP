@@ -137,7 +137,7 @@
 			],
 			"name": "imu",
 			"displayName": "Orientation from IMU",
-            "description": "Orientation in radians from Inertial Measurement Unit sensor (LSM9DS1)",
+            "description": "Orientation in degree from Inertial Measurement Unit sensor (LSM9DS1)",
             "unit": "degreeOfArc",
             "schema": {
                 "@type": "Object",
@@ -162,7 +162,7 @@
             "name": "manufacturer",
             "displayName": "Manufactured by",
             "schema": "string",
-            "description": "OKdo Technology Limited",
+            "description": "Manufacturer of the device",
             "writable": false
         },
         {
