@@ -289,12 +289,12 @@ async def main():
             humidity = sense.get_humidity()
             temperature_lps25h = ((sense.get_temperature_from_pressure()/5)*9)+32
             pressure = sense.get_pressure()
-            orientation_deg = sense.get_orientation_degrees()
+            orientation_rad = sense.get_orientation_radians()
             lsm9ds1_accelerometer = sense.get_accelerometer_raw()
             lsm9ds1_gyroscope = sense.get_gyroscope_raw()
             lsm9ds1_compass = sense.get_compass_raw()  
 
-            temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_deg,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
+            temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
             await send_telemetry_from_thermostat(device_client, temperature_msg1)
             await asyncio.sleep(8)
 
