@@ -168,45 +168,46 @@
         {
             "@type": "Property",
             "name": "led_color",
+            "displayName": "SenseHat LED Color",
             "description": "Change LED matrix color by update property",
             "writable": true,
             "schema": {
                 "@type": "Enum",
-                "valueSchema": "string",
+                "valueSchema": "integer",
                 "enumValues": [
                     {
-                        "name": "OFF",
-                        "displayName": "OFF",
+                        "name": "off",
+                        "displayName": "Off",
                         "enumValue": 0
                     },
                     {
-                        "name": "RED",
-                        "displayName": "RED",
+                        "name": "red",
+                        "displayName": "Red",
                         "enumValue": 1
                     },
                     {
-                        "name": "GREEN",
-                        "displayName": "GREEN",
+                        "name": "green",
+                        "displayName": "Green",
                         "enumValue": 2
                     },
                     {
-                        "name": "BLUE",
-                        "displayName": "BLUE",
+                        "name": "blue",
+                        "displayName": "Blue",
                         "enumValue": 3
                     },
                     {
-                        "name": "WHITE",
-                        "displayName": "WHITE",
+                        "name": "white",
+                        "displayName": "White",
                         "enumValue": 4
                     },
                     {
-                        "name": "YELLOW",
-                        "displayName": "YELLOW",
+                        "name": "yellow",
+                        "displayName": "Yellow",
                         "enumValue": 5
                     },
                     {
-                        "name": "PURPLE",
-                        "displayName": "PURPLE",
+                        "name": "purple",
+                        "displayName": "Purple",
                         "enumValue": 6
                     }
                 ]
