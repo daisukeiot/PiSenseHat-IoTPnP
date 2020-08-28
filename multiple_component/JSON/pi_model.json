@@ -1,0 +1,53 @@
+{
+	"@context": "dtmi:dtdl:context;2",
+	"@id": "dtmi:com:example:pi;1",
+	"@type": "Interface",
+	"displayName": "RapberryPi",
+	"description": "IoT Plug and Play device model for Raspberry Pi",
+	"contents": [
+        {
+			"@type": [
+				"Telemetry",
+				"Temperature"
+			],
+			"name": "temperature_cpu",
+			"displayName": "Temperature from cpu",
+			"description": "Temperature in degrees celsius from cpu",
+			"schema": "double",
+			"unit": "degreeCelsius"
+		},
+		{
+			"@type": [
+				"Telemetry",
+				"Voltage"
+			],
+			"name": "voltage_cpu",
+			"displayName": "voltage from cpu",
+			"description": "Voltage from cpu",
+			"schema": "double",
+			"unit": "volt"
+		},
+		{
+            "@type": "Property",
+            "name": "display_on_off",
+            "description": "HDMI_DISPLAY_OUTPUT_On_Off",
+            "writable": true,
+            "schema": {
+                "@type": "Enum",
+                "valueSchema": "string",
+                "enumValues": [
+                    {
+                        "name": "OFF",
+                        "displayName": "OFF",
+                        "enumValue": 10
+                    },
+                    {
+                        "name": "ON",
+                        "displayName": "ON",
+                        "enumValue": 11
+                    }
+				]
+			}	
+		}
+	]	
+}

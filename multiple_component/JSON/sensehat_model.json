@@ -1,0 +1,225 @@
+{
+	"@context": "dtmi:dtdl:context;2",
+	"@id": "dtmi:com:example:sensehat;1",
+	"@type": "Interface",
+	"displayName": "SenseHat",
+	"description": "IoT Plug and Play device model for SenseHat",
+	"contents": [
+		{
+			"@type": [
+				"Telemetry",
+				"Temperature"
+			],
+			"name": "temperature_hts221",
+			"displayName": "Temperature from HTS221",
+			"description": "Temperature in degrees celsius from HTS221",
+			"schema": "double",
+			"unit": "degreeCelsius"
+        },
+        {
+            "@type": [
+              "Telemetry",
+              "RelativeHumidity"
+            ],
+            "name": "humidity",
+            "displayName": "Humidity from HTS221",
+			"description": "Humidity in percent from HTS221",
+            "schema": "double",
+            "unit": "percent"
+        },
+        {
+			"@type": [
+				"Telemetry",
+				"Temperature"
+			],
+			"name": "temperature_lps25h",
+			"displayName": "Temperature from LPS25H",
+			"description": "Temperature in degrees fahrenheit from LPS25H",
+			"schema": "double",
+			"unit": "degreeFahrenheit"
+        },
+        {
+			"@type": [
+				"Telemetry",
+				"Pressure"
+			],
+			"name": "pressure",
+			"displayName": "Pressure from LPS25H",
+			"description": "Pressure in kilo pascal from LPS25H",
+			"schema": "double",
+			"unit": "kilopascal"
+        },
+        {
+			"@type": [
+                "Telemetry",
+                "Acceleration"	
+			],
+			"name": "lsm9ds1_accelerometer",
+			"displayName": "Accelerometer from IMU",
+			"description": "Acceleration in Gs from LSM9DS1",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "gForce"
+        },
+        {
+			"@type": [
+				"Telemetry",
+                "AngularVelocity"
+			],
+			"name": "lsm9ds1_gyroscope",
+			"displayName": "Gyroscope from IMU",
+			"description": "Gyroscope data in radian per second from LSM9DS1",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "radianPerSecond"
+        },
+        {
+			"@type": [
+                "Telemetry",
+                "MagneticInduction"
+			],
+			"name": "lsm9ds1_compass",
+			"displayName": "Compass from LPS25H",
+			"description": "Compass data in microtesla from LSM9DS1",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "x",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "y",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "z",
+                        "schema": "double"
+                    }
+                ]
+            },
+			"unit": "tesla"
+        },
+        {
+            "@type": [
+				"Telemetry",
+				"Angle"
+			],
+			"name": "imu",
+			"displayName": "Orientation from IMU",
+            "description": "Orientation in radians from Inertial Measurement Unit sensor (LSM9DS1)",
+            "unit": "radian",
+            "schema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "yaw",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "roll",
+                        "schema": "double"
+                    },
+                    {
+                        "name": "pitch",
+                        "schema": "double"
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "Property",
+            "name": "manufacturer",
+            "displayName": "Manufactured by",
+            "schema": "string",
+            "description": "OKdo Technology Limited",
+            "writable": false
+        },
+        {
+            "@type": "Property",
+            "name": "led_color",
+            "description": "Change LED matrix color by update property",
+            "writable": true,
+            "schema": {
+                "@type": "Enum",
+                "valueSchema": "string",
+                "enumValues": [
+                    {
+                        "name": "OFF",
+                        "displayName": "OFF",
+                        "enumValue": 0
+                    },
+                    {
+                        "name": "RED",
+                        "displayName": "RED",
+                        "enumValue": 1
+                    },
+                    {
+                        "name": "GREEN",
+                        "displayName": "GREEN",
+                        "enumValue": 2
+                    },
+                    {
+                        "name": "BLUE",
+                        "displayName": "BLUE",
+                        "enumValue": 3
+                    },
+                    {
+                        "name": "WHITE",
+                        "displayName": "WHITE",
+                        "enumValue": 4
+                    },
+                    {
+                        "name": "YELLOW",
+                        "displayName": "YELLOW",
+                        "enumValue": 5
+                    },
+                    {
+                        "name": "PURPLE",
+                        "displayName": "PURPLE",
+                        "enumValue": 6
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "Command",
+            "description": "This command will display text on the SenseHat LED matrix.",
+            "name": "show_text",
+            "request": {
+              "name": "text_here",
+              "schema": "string"
+            }
+        }
+	]
+}

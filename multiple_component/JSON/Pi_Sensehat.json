@@ -1,0 +1,23 @@
+{
+  "@context": "dtmi:dtdl:context;2",
+  "@id": "dtmi:com:example:pi_sensehat;1",
+  "@type": "Interface",
+  "displayName": "Pi_Sensehat",
+  "description": "Pi + Sensehat",
+  "contents": [    
+    {
+      "@type" : "Component",
+      "schema": "dtmi:com:example:pi;1",
+      "name": "RaspberryPi",
+      "displayName": "RaspberryPi",
+      "description": "Raspberry Pi Mainboard"
+    },
+    {
+      "@type" : "Component",
+      "schema": "dtmi:com:example:sensehat;1",
+      "name": "SenseHat",
+      "displayName": "SenseHat Board",
+      "description": "SemseHat Sensor Board"
+    }
+  ]
+}
