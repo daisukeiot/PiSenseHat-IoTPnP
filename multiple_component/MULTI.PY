@@ -55,6 +55,13 @@ async def led_text_handler(values):
         sense.show_message(values, text_colour=[0, 255, 0])
     print("Done")
 
+async def reboot_handler(values):
+    if values == 9999:
+        print(
+            "Will Reboot now"
+            )
+        os.popen('sudo reboot now')
+    
 
 
 # END COMMAND HANDLERS
@@ -66,6 +73,10 @@ async def led_text_handler(values):
 
 def create_led_text_report_response(values):
     response = {"result": True, "data": "show text succeeded"}
+    return response
+
+def create_reboot_report_response(values):
+    response = {"result": True, "data": "reboot success"}
     return response
 
 
@@ -314,13 +325,26 @@ async def main():
             else:
                 iotin_dict = values
             
-            
-            if (patch['display_on_off']) == 10:
-               sense.show_message("10", back_colour=[255, 0, 0])
-            elif (patch['display_on_off']) == 11:
-               sense.show_message("11", back_colour=[255, 0, 0])
-            
-
+            led = int( values.get('display_on_off',"0")) + int(values.get('led_color',"0"))
+            if led == 10:
+               os.popen('vcgencmd display_power 0')
+            elif led == 20:
+               os.popen('vcgencmd display_power 1')
+            elif led == 1:
+               sense.show_message("", back_colour=[255, 0, 0])
+            elif led == 2:
+               sense.show_message("", back_colour=[0, 255, 0])
+            elif led == 3:
+               sense.show_message("", back_colour=[0, 0, 255])
+            elif led == 4:
+               sense.show_message("", back_colour=[255, 255, 255])
+            elif led == 5:
+               sense.show_message("", back_colour=[255, 255, 0])
+            elif led == 6:
+               sense.show_message("", back_colour=[148, 0, 211])
+            else:
+               sense.show_message("", back_colour=[0, 0, 0])    
+     
         await device_client.patch_twin_reported_properties(iotin_dict)
 
     ################################################
@@ -330,8 +354,20 @@ async def main():
 
     listeners = asyncio.gather(
         execute_command_listener(
-            device_client, component_name_1,method_name="show_text", user_command_handler=led_text_handler
+            device_client,
+            component_name_1,
+            method_name="show_text",
+            user_command_handler=led_text_handler,
+            create_user_response_handler=create_led_text_report_response,
         ),
+        execute_command_listener(
+            device_client,
+            component_name_2,
+            method_name="reboot",
+            user_command_handler=reboot_handler,
+            create_user_response_handler=create_reboot_report_response,
+        ),
+
         execute_property_listener(),
     )
 

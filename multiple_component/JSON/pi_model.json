@@ -26,28 +26,57 @@
 			"description": "Voltage from cpu",
 			"schema": "double",
 			"unit": "volt"
-		},
+    },
+    {
+      "@type": "Property",
+      "name": "manufacturer",
+      "displayName": "Manufactured by",
+      "schema": "string",
+      "description": "Raspberry Pi Foundation",
+      "writable": false
+    },
 		{
-            "@type": "Property",
-            "name": "display_on_off",
-            "description": "HDMI_DISPLAY_OUTPUT_On_Off",
-            "writable": true,
-            "schema": {
-                "@type": "Enum",
-                "valueSchema": "string",
-                "enumValues": [
-                    {
-                        "name": "OFF",
-                        "displayName": "OFF",
-                        "enumValue": 10
-                    },
-                    {
-                        "name": "ON",
-                        "displayName": "ON",
-                        "enumValue": 11
-                    }
+      "@type": "Property",
+      "name": "display_on_off",
+      "description": "HDMI_DISPLAY_OUTPUT_On_Off",
+      "writable": true,
+      "schema": {
+          "@type": "Enum",
+          "valueSchema": "string",
+          "enumValues": [
+              {
+                  "name": "OFF",
+                  "displayName": "OFF",
+                  "enumValue": 10
+              },
+              {
+                  "name": "ON",
+                  "displayName": "ON",
+                  "enumValue": 20
+              }
 				]
 			}	
-		}
+		},
+    {
+      "@type": "Command",
+      "name": "reboot",
+      "displayName": "Reboot now",
+      "description": "Reboot Pi now",
+      "commandType": "synchronous",
+      "request": {
+      "name": "Reboot_system",
+        "schema": {
+          "@type": "Enum",
+          "valueSchema": "string",
+          "enumValues": [
+            {
+              "name": "Reboot_now",
+              "displayName": "Reboot now",
+              "enumValue": 9999
+            }
+          ]
+        }
+			}
+		}	
 	]	
 }
