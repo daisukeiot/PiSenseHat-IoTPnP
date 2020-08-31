@@ -206,9 +206,14 @@
             "enumValue": 5
           },
           {
-            "name": "purple",
-            "displayName": "Purple",
+            "name": "magenta",
+            "displayName": "Magenta",
             "enumValue": 6
+          },
+          {
+            "name": "cyan",
+            "displayName": "Cyan",
+            "enumValue": 7
           }
         ]
       }
