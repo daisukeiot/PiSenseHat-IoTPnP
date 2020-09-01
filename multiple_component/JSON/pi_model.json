@@ -42,7 +42,7 @@
       "writable": true,
       "schema": {
           "@type": "Enum",
-          "valueSchema": "string",
+          "valueSchema": "integer",
           "enumValues": [
               {
                   "name": "OFF",
@@ -67,7 +67,7 @@
       "name": "Reboot_system",
         "schema": {
           "@type": "Enum",
-          "valueSchema": "string",
+          "valueSchema": "integer",
           "enumValues": [
             {
               "name": "Reboot_now",

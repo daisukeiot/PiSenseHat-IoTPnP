@@ -56,26 +56,26 @@
 			],
 			"name": "lsm9ds1_accelerometer",
 			"displayName": "Accelerometer from IMU",
-			"description": "Acceleration in Gs from LSM9DS1",
+            "description": "Acceleration in Gs from LSM9DS1",
+            "unit": "gForce",
             "schema": {
                 "@type": "Object",
                 "fields": [
                     {
                         "name": "x",
-                        "schema": "double"
+                        "schema": "string"
                     },
                     {
                         "name": "y",
-                        "schema": "double"
+                        "schema": "string"
                     },
                     {
                         "name": "z",
-                        "schema": "double"
+                        "schema": "string"
                     }
                 ]
-            },
-			"unit": "gForce"
-        },
+            }
+		},
         {
 			"@type": [
 				"Telemetry",
@@ -83,7 +83,8 @@
 			],
 			"name": "lsm9ds1_gyroscope",
 			"displayName": "Gyroscope from IMU",
-			"description": "Gyroscope data in radian per second from LSM9DS1",
+            "description": "Gyroscope data in radian per second from LSM9DS1",
+            "unit": "radianPerSecond",
             "schema": {
                 "@type": "Object",
                 "fields": [
@@ -100,8 +101,7 @@
                         "schema": "double"
                     }
                 ]
-            },
-			"unit": "radianPerSecond"
+            }			
         },
         {
 			"@type": [
@@ -110,7 +110,8 @@
 			],
 			"name": "lsm9ds1_compass",
 			"displayName": "Compass from LPS25H",
-			"description": "Compass data in microtesla from LSM9DS1",
+            "description": "Compass data in microtesla from LSM9DS1",
+            "unit": "tesla",
             "schema": {
                 "@type": "Object",
                 "fields": [
@@ -127,8 +128,7 @@
                         "schema": "double"
                     }
                 ]
-            },
-			"unit": "tesla"
+            }			
         },
         {
             "@type": [
@@ -141,6 +141,7 @@
             "unit": "radian",
             "schema": {
                 "@type": "Object",
+                "schema": "double",
                 "fields": [
                     {
                         "name": "yaw",
@@ -172,7 +173,7 @@
             "writable": true,
             "schema": {
                 "@type": "Enum",
-                "valueSchema": "string",
+                "valueSchema": "integer",
                 "enumValues": [
                     {
                         "name": "OFF",
