@@ -202,6 +202,7 @@ async def main():
                 symmetric_key=symmetric_key,
                 hostname=registration_result.registration_state.assigned_hub,
                 device_id=registration_result.registration_state.device_id,
+                product_info=model_id
             )
         else:
             raise RuntimeError("Could not provision device. Aborting PNP device connection.")
