@@ -342,6 +342,8 @@ async def main():
                sense.show_message("", back_colour=[255, 255, 0])
             elif led == 6:
                sense.show_message("", back_colour=[148, 0, 211])
+            elif led == 7:
+               sense.show_message("", back_colour=[0, 255, 255])
             else:
                sense.show_message("", back_colour=[0, 0, 0])    
      
