@@ -1,8 +1,7 @@
 
 
 
-## Rasbian
-
+**Raspberry Pi setup**
 1. Make sure all dependencies are installed before run python code. For Rasbian, you can use apt-get to install the right packages.
     ```bash
     sudo apt-get update
@@ -19,8 +18,7 @@
     pip3 install azure-iot-device
     ``` 
    
-Use Connection string 
- 
+**Use connection string** 
 1. Add connection string to your Raspberry Pi enviroment 
     ```bash
     nano ~/.bashrc
@@ -39,14 +37,11 @@ Use Connection string
    
 1. Go to sample folder,  default_component or multi_component
     ```bash
-    sudo reboot now
-    ```   
-    ```bash
     cd PiSenseHat-IoTPnP
     cd default_component or cd multi_component
     ```
 
-1. Run python sample code for Sensehat 
+1. Run IoT Plug & Play python sample code for Sensehat 
     ```bash
     python3 pnp_snesehat.py or python3 pnp_multi_sensehat.py
     ```  
