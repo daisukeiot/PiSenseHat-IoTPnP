@@ -1,6 +1,9 @@
 {
-  "@context": "dtmi:dtdl:context;2",
-  "@id": "dtmi:com:example:sensehat;2",
+  "@context": [
+    "dtmi:dtdl:context;2",
+    "dtmi:iotcentral:context;2"
+  ],
+  "@id": "dtmi:iotpnpadt:DigitalTwins;SenseHat;2",
   "@type": "Interface",
   "displayName": "SenseHat",
   "description": "IoT Plug and Play device model for SenseHat",
@@ -67,28 +70,12 @@
     {
       "@type": [
         "Telemetry",
-        "Acceleration"
+        "AccelerationVector"
       ],
       "name": "lsm9ds1_accelerometer",
       "displayName": "Accelerometer from IMU",
       "description": "Acceleration in Gs from LSM9DS1",
-      "schema": {
-        "@type": "Object",
-        "fields": [
-          {
-            "name": "x",
-            "schema": "double"
-          },
-          {
-            "name": "y",
-            "schema": "double"
-          },
-          {
-            "name": "z",
-            "schema": "double"
-          }
-        ]
-      },
+      "schema": "vector"
       "unit": "gForce"
     },
     {
