@@ -54,26 +54,32 @@
           "Telemetry",
           "Acceleration"
         ],
-        "name": "lsm9ds1_accelerometer",
-        "displayName": "Accelerometer from IMU",
+        "name": "lsm9ds1_accelerometer_x",
+        "displayName": "Accelerometer x from IMU",
         "description": "Acceleration in Gs from LSM9DS1",
-        "schema": {
-          "@type": "Object",
-          "fields": [
-            {
-              "name": "x",
-              "schema": "double"
-            },
-            {
-              "name": "y",
-              "schema": "double"
-            },
-            {
-              "name": "z",
-              "schema": "double"
-            }
-          ]
-        },
+        "schema": "double",
+        "unit": "gForce"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "Acceleration"
+        ],
+        "name": "lsm9ds1_accelerometer_y",
+        "displayName": "Accelerometer y from IMU",
+        "description": "Acceleration in Gs from LSM9DS1",
+        "schema": "double",
+        "unit": "gForce"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "Acceleration"
+        ],
+        "name": "lsm9ds1_accelerometer_z",
+        "displayName": "Accelerometer z from IMU",
+        "description": "Acceleration in Gs from LSM9DS1",
+        "schema": "double",
         "unit": "gForce"
       },
       {
@@ -81,26 +87,32 @@
           "Telemetry",
           "AngularVelocity"
         ],
-        "name": "lsm9ds1_gyroscope",
-        "displayName": "Gyroscope from IMU",
+        "name": "lsm9ds1_gyroscope_x",
+        "displayName": "Gyroscope x from IMU",
         "description": "Gyroscope data in radian per second from LSM9DS1",
-        "schema": {
-          "@type": "Object",
-          "fields": [
-            {
-              "name": "x",
-              "schema": "double"
-            },
-            {
-              "name": "y",
-              "schema": "double"
-            },
-            {
-              "name": "z",
-              "schema": "double"
-            }
-          ]
-        },
+        "schema": "double",
+        "unit": "radianPerSecond"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "AngularVelocity"
+        ],
+        "name": "lsm9ds1_gyroscope_y",
+        "displayName": "Gyroscope y from IMU",
+        "description": "Gyroscope data in radian per second from LSM9DS1",
+        "schema": "double",
+        "unit": "radianPerSecond"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "AngularVelocity"
+        ],
+        "name": "lsm9ds1_gyroscope_z",
+        "displayName": "Gyroscope z from IMU",
+        "description": "Gyroscope data in radian per second from LSM9DS1",
+        "schema": "double",
         "unit": "radianPerSecond"
       },
       {
@@ -108,26 +120,32 @@
           "Telemetry",
           "MagneticInduction"
         ],
-        "name": "lsm9ds1_compass",
-        "displayName": "Compass from LPS25H",
+        "name": "lsm9ds1_compass_x",
+        "displayName": "Compass x from LPS25H",
         "description": "Compass data in microtesla from LSM9DS1",
-        "schema": {
-          "@type": "Object",
-          "fields": [
-            {
-              "name": "x",
-              "schema": "double"
-            },
-            {
-              "name": "y",
-              "schema": "double"
-            },
-            {
-              "name": "z",
-              "schema": "double"
-            }
-          ]
-        },
+        "schema": "double",
+        "unit": "tesla"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "MagneticInduction"
+        ],
+        "name": "lsm9ds1_compass_y",
+        "displayName": "Compass y from LPS25H",
+        "description": "Compass data in microtesla from LSM9DS1",
+        "schema": "double",
+        "unit": "tesla"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "MagneticInduction"
+        ],
+        "name": "lsm9ds1_compass_z",
+        "displayName": "Compass z from LPS25H",
+        "description": "Compass data in microtesla from LSM9DS1",
+        "schema": "double",
         "unit": "tesla"
       },
       {
@@ -135,27 +153,33 @@
           "Telemetry",
           "Angle"
         ],
-        "name": "imu",
-        "displayName": "Orientation from IMU",
+        "name": "imu_yaw",
+        "displayName": "Orientation from IMU yaw",
         "description": "Orientation in degree from Inertial Measurement Unit sensor (LSM9DS1)",
         "unit": "degreeOfArc",
-        "schema": {
-          "@type": "Object",
-          "fields": [
-            {
-              "name": "yaw",
-              "schema": "double"
-            },
-            {
-              "name": "roll",
-              "schema": "double"
-            },
-            {
-              "name": "pitch",
-              "schema": "double"
-            }
-          ]
-        }
+        "schema": "double"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "Angle"
+        ],
+        "name": "imu_roll",
+        "displayName": "Orientation from IMU roll",
+        "description": "Orientation in degree from Inertial Measurement Unit sensor (LSM9DS1)",
+        "unit": "degreeOfArc",
+        "schema": "double"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "Angle"
+        ],
+        "name": "imu_pitch",
+        "displayName": "Orientation from IMU pitch",
+        "description": "Orientation in degree from Inertial Measurement Unit sensor (LSM9DS1)",
+        "unit": "degreeOfArc",
+        "schema": "double"
       },
       {
         "@type": "Property",

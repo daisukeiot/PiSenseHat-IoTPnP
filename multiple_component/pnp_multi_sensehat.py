@@ -222,14 +222,40 @@ async def execute_listener(
 # PROPERTY TASKS
 
 
-#async def execute_property_listener(device_client):
-#    while True:
-#        patch = await device_client.receive_twin_desired_properties_patch()  # blocking call
-#        pnp_properties_dict = pnp_helper_preview_refresh.create_reported_properties_from_desired(
-#            patch
-##        )
-#
-#        await device_client.patch_twin_reported_properties(pnp_properties_dict)
+async def execute_property_listener(device_client):
+    while True:
+        patch = await device_client.receive_twin_desired_properties_patch()  # blocking call
+        print(patch)
+        properties_dict = pnp_helper_preview_refresh.create_reported_properties_from_desired(patch)
+        await device_client.patch_twin_reported_properties(properties_dict)
+        print(properties_dict['SenseHat']['led_color'].get('value', None))
+        print(properties_dict['RaspberryPi']['display_on_off'].get('value', None))
+        
+        led = int( properties_dict['RaspberryPi']['display_on_off'].get('value', default),"0") + int( properties_dict['SenseHat']['led_color'].get('value', default),"0") 
+        print(led)
+        if led == 10:
+            os.popen('vcgencmd display_power 0')
+        elif led == 20:
+            os.popen('vcgencmd display_power 1')
+        elif led == 1:
+            sense.show_message("", back_colour=[255, 0, 0])
+        elif led == 2:
+            sense.show_message("", back_colour=[0, 255, 0])
+        elif led == 3:
+            sense.show_message("", back_colour=[0, 0, 255])
+        elif led == 4:
+            sense.show_message("", back_colour=[255, 255, 255])
+        elif led == 5:
+            sense.show_message("", back_colour=[255, 255, 0])
+        elif led == 6:
+            sense.show_message("", back_colour=[148, 0, 211])
+        elif led == 7:
+            sense.show_message("", back_colour=[0, 255, 255])
+        else:
+            sense.show_message("", back_colour=[0, 0, 0])    
+   
+       
+        
 
 
 #####################################################
@@ -297,57 +323,27 @@ async def main():
 
     ################################################
     # Update readable properties from various components
-    async def execute_property_listener():
-        ignore_keys = ["__t", "$version"]
-        while True:
-            patch = await device_client.receive_twin_desired_properties_patch()  # blocking call
-            print(patch)
 
-            component_prefix = list(patch.keys())[0]
-            values = patch[component_prefix]
-            #print("previous values")
-                        
-            version = patch["$version"]
-            inner_dict = {}
-            #for prop_name, prop_value in values.items():
-            #    if prop_name in ignore_keys:
-            #        continue
-            #    else:
-            #        inner_dict["ac"] = 200
-            #        inner_dict["ad"] = "Successfully executed patch"
-            #        inner_dict["av"] = version
-            #        inner_dict["value"] = prop_value
-            #        values[prop_name] = inner_dict
-                    
-            iotin_dict = dict()
-            if component_prefix:
-                iotin_dict[component_prefix] = values
-            else:
-                iotin_dict = values
-            
-            led = int( values.get('display_on_off',"0")) + int(values.get('led_color',"0"))
-            if led == 10:
-               os.popen('vcgencmd display_power 0')
-            elif led == 20:
-               os.popen('vcgencmd display_power 1')
-            elif led == 1:
-               sense.show_message("", back_colour=[255, 0, 0])
-            elif led == 2:
-               sense.show_message("", back_colour=[0, 255, 0])
-            elif led == 3:
-               sense.show_message("", back_colour=[0, 0, 255])
-            elif led == 4:
-               sense.show_message("", back_colour=[255, 255, 255])
-            elif led == 5:
-               sense.show_message("", back_colour=[255, 255, 0])
-            elif led == 6:
-               sense.show_message("", back_colour=[148, 0, 211])
-            elif led == 7:
-               sense.show_message("", back_colour=[0, 255, 255])
-            else:
-               sense.show_message("", back_colour=[0, 0, 0])    
-     
-        await device_client.patch_twin_reported_properties(iotin_dict)
+    properties_root = pnp_helper_preview_refresh.create_reported_properties(
+        manufacturer = "Pi Fundation"
+    )
+    properties_RaspberryPi = pnp_helper_preview_refresh.create_reported_properties(
+        component_name_1, manufacturer = "OKdo"
+    )
+    properties_SenseHat = pnp_helper_preview_refresh.create_reported_properties(
+        component_name_2, manufacturer = "Pi Fundation"
+    )
+
+    property_updates = asyncio.gather(
+        device_client.patch_twin_reported_properties(properties_root),
+        device_client.patch_twin_reported_properties(properties_RaspberryPi),
+        device_client.patch_twin_reported_properties(properties_SenseHat),
+    )
+
+
+
+    ################################################
+    # Update readable properties from various components
 
     ################################################
     ################################################
@@ -370,7 +366,7 @@ async def main():
             create_user_response_handler=create_reboot_report_response,
         ),
 
-        execute_property_listener(),
+        execute_property_listener(device_client),
     )
 
 
@@ -403,13 +399,27 @@ async def main():
             orientation_rad = sense.get_orientation_radians()
             lsm9ds1_accelerometer = sense.get_accelerometer_raw()
             lsm9ds1_gyroscope = sense.get_gyroscope_raw()
-            lsm9ds1_compass = sense.get_compass_raw()
+            lsm9ds1_compass = sense.get_compass_raw()  
+            imu_yaw = orientation_rad['yaw']
+            imu_roll = orientation_rad['roll']
+            imu_pitch = orientation_rad['pitch']
+            lsm9ds1_compass_x = lsm9ds1_compass['x']
+            lsm9ds1_compass_y = lsm9ds1_compass['y']
+            lsm9ds1_compass_z = lsm9ds1_compass['z']
+            lsm9ds1_gyroscope_x = lsm9ds1_gyroscope['x']
+            lsm9ds1_gyroscope_y = lsm9ds1_gyroscope['y']
+            lsm9ds1_gyroscope_z = lsm9ds1_gyroscope['z']
+            lsm9ds1_accelerometer_x = lsm9ds1_accelerometer['x']
+            lsm9ds1_accelerometer_y = lsm9ds1_accelerometer['y']
+            lsm9ds1_accelerometer_z = lsm9ds1_accelerometer['z']
             temperature_cpu = float(os.popen('vcgencmd measure_temp').read()[5:9])
             cpu_volt = float(os.popen('vcgencmd measure_volts').read()[5:9])
-            telemetry_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
+#           telemetry_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
+            telemetry_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu_yaw": imu_yaw,"imu_roll": imu_roll,"imu_pitch": imu_pitch,"lsm9ds1_accelerometer_x": lsm9ds1_accelerometer_x,"lsm9ds1_accelerometer_y": lsm9ds1_accelerometer_y,"lsm9ds1_accelerometer_z": lsm9ds1_accelerometer_z,"lsm9ds1_gyroscope_x": lsm9ds1_gyroscope_x,"lsm9ds1_gyroscope_y": lsm9ds1_gyroscope_y,"lsm9ds1_gyroscope_z": lsm9ds1_gyroscope_z,"lsm9ds1_compass_x": lsm9ds1_compass_x,"lsm9ds1_compass_y": lsm9ds1_compass_y,"lsm9ds1_compass_z": lsm9ds1_compass_z}
             telemetry_msg2 = {"temperature_cpu": temperature_cpu,"voltage_cpu": cpu_volt}
             await send_telemetry_from_pi_sensehat(device_client, telemetry_msg1, component_name_1)
             await send_telemetry_from_pi_sensehat(device_client, telemetry_msg2, component_name_2)
+            await device_client.patch_twin_reported_properties({"manufacturer": "Pi Fundation"})
             await asyncio.sleep(8)
 
     send_telemetry_task = asyncio.create_task(send_telemetry())

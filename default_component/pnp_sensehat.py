@@ -89,8 +89,49 @@ async def execute_command_listener(
         except Exception:
             print("responding to the {command} command failed".format(command=method_name))
 
+
 # END COMMAND LISTENERS
 #####################################################
+async def execute_property_listener(device_client):
+    ignore_keys = ["__t", "$version"]
+    while True:
+        patch = await device_client.receive_twin_desired_properties_patch()  # blocking call
+
+        print("the data in the desired properties patch was: {}".format(patch))
+        print(patch)
+        version = patch["$version"]
+        prop_dict = {}
+        for prop_name, prop_value in patch.items():
+            if prop_name in ignore_keys:
+                continue
+            else:
+                prop_dict[prop_name] = {
+                    "ac": 200,
+                    "ad": "Successfully executed patch",
+                    "av": version,
+                    "value": prop_value,
+                }
+        await device_client.patch_twin_reported_properties(prop_dict)
+
+        component_prefix = list(patch.keys())[0]
+        values = patch[component_prefix]
+        if values == 1:
+            sense.show_message("", back_colour=[255, 0, 0])
+        elif values == 2:
+            sense.show_message("", back_colour=[0, 255, 0])
+        elif values == 3:
+            sense.show_message("", back_colour=[0, 0, 255])    
+        elif values == 4:
+            sense.show_message("", back_colour=[255, 255, 255])
+        elif values == 5:
+            sense.show_message("", back_colour=[255, 255, 0])
+        elif values == 6:
+            sense.show_message("", back_colour=[148, 0, 211])
+        elif values == 7:
+            sense.show_message("", back_colour=[0, 255, 255])
+        else:
+            sense.show_message("", back_colour=[0, 0, 0])
+       
 
 async def execute_listener(
     device_client,
@@ -170,7 +211,8 @@ def stdin_listener():
 
 # END KEYBOARD INPUT LISTENER
 #####################################################
-
+def change_led():
+    print("***")
 
 #####################################################
 # MAIN STARTS
@@ -216,53 +258,6 @@ async def main():
     # Connect the client.
     await device_client.connect()
 
-    async def execute_property_listener():
-        ignore_keys = ["__t", "$version"]
-        while True:
-            patch = await device_client.receive_twin_desired_properties_patch()  # blocking call
-            print(patch)
-
-            component_prefix = list(patch.keys())[0]
-            values = patch[component_prefix]
-            #print("previous values")
-                        
-            version = patch["$version"]
-            inner_dict = {}
-            #for prop_name, prop_value in values.items():
-            #    if prop_name in ignore_keys:
-            #        continue
-            #    else:
-            #        inner_dict["ac"] = 200
-            #        inner_dict["ad"] = "Successfully executed patch"
-            #        inner_dict["av"] = version
-            #        inner_dict["value"] = prop_value
-            #        values[prop_name] = inner_dict
-                    
-            iotin_dict = dict()
-            if component_prefix:
-                iotin_dict[component_prefix] = values
-                #print(iotin_dict)
-            else:
-                iotin_dict = values
-                    
-            if values == 1:
-                sense.show_message("", back_colour=[255, 0, 0])
-            elif values == 2:
-                sense.show_message("", back_colour=[0, 255, 0])
-            elif values == 3:
-                sense.show_message("", back_colour=[0, 0, 255])    
-            elif values == 4:
-                sense.show_message("", back_colour=[255, 255, 255])
-            elif values == 5:
-                sense.show_message("", back_colour=[255, 255, 0])
-            elif values == 6:
-                sense.show_message("", back_colour=[148, 0, 211])
-            else:
-                sense.show_message("", back_colour=[0, 0, 0])        
-
-        await device_client.patch_twin_reported_properties(iotin_dict)
- 
-
     ################################################
     # Register callback and Handle command (reboot)
     print("Listening for command requests and property updates")
@@ -274,7 +269,7 @@ async def main():
             user_command_handler=led_text_handler,
             create_user_response_handler=create_led_text_report_response,
         ),
-        execute_property_listener()  
+        execute_property_listener(device_client)  
     )
 
 
@@ -294,9 +289,22 @@ async def main():
             lsm9ds1_accelerometer = sense.get_accelerometer_raw()
             lsm9ds1_gyroscope = sense.get_gyroscope_raw()
             lsm9ds1_compass = sense.get_compass_raw()  
-
-            temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
+            imu_yaw = orientation_rad['yaw']
+            imu_roll = orientation_rad['roll']
+            imu_pitch = orientation_rad['pitch']
+            lsm9ds1_compass_x = lsm9ds1_compass['x']
+            lsm9ds1_compass_y = lsm9ds1_compass['y']
+            lsm9ds1_compass_z = lsm9ds1_compass['z']
+            lsm9ds1_gyroscope_x = lsm9ds1_gyroscope['x']
+            lsm9ds1_gyroscope_y = lsm9ds1_gyroscope['y']
+            lsm9ds1_gyroscope_z = lsm9ds1_gyroscope['z']
+            lsm9ds1_accelerometer_x = lsm9ds1_accelerometer['x']
+            lsm9ds1_accelerometer_y = lsm9ds1_accelerometer['y']
+            lsm9ds1_accelerometer_z = lsm9ds1_accelerometer['z']
+#           temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
+            temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu_yaw": imu_yaw,"imu_roll": imu_roll,"imu_pitch": imu_pitch,"lsm9ds1_accelerometer_x": lsm9ds1_accelerometer_x,"lsm9ds1_accelerometer_y": lsm9ds1_accelerometer_y,"lsm9ds1_accelerometer_z": lsm9ds1_accelerometer_z,"lsm9ds1_gyroscope_x": lsm9ds1_gyroscope_x,"lsm9ds1_gyroscope_y": lsm9ds1_gyroscope_y,"lsm9ds1_gyroscope_z": lsm9ds1_gyroscope_z,"lsm9ds1_compass_x": lsm9ds1_compass_x,"lsm9ds1_compass_y": lsm9ds1_compass_y,"lsm9ds1_compass_z": lsm9ds1_compass_z}
             await send_telemetry_from_thermostat(device_client, temperature_msg1)
+            await device_client.patch_twin_reported_properties({"manufacturer": "Pi Fundation"})
             await asyncio.sleep(8)
 
     send_telemetry_task = asyncio.create_task(send_telemetry())
