@@ -230,10 +230,10 @@ async def provision_device(provisioning_host, id_scope, registration_id, symmetr
 async def main():
     switch = os.getenv("IOTHUB_DEVICE_SECURITY_TYPE")
     if switch == "DPS":
-        provisioning_host = os.getenv("IOTHUB_DEVICE_DPS_ENDPOINT")
-        id_scope = os.getenv("IOTHUB_DEVICE_DPS_ID_SCOPE")
-        registration_id = os.getenv("IOTHUB_DEVICE_DPS_DEVICE_ID")
-        symmetric_key = os.getenv("IOTHUB_DEVICE_DPS_DEVICE_KEY")
+        provisioning_host = "global.azure-devices-provisioning.net"
+        id_scope = os.getenv("DPS_IDSCOPE")
+        registration_id = os.getenv("DPS_DEVICE_ID")
+        symmetric_key = os.getenv("DPS_SYMMETRIC_KEY")
 
         registration_result = await provision_device(
             provisioning_host, id_scope, registration_id, symmetric_key, model_id

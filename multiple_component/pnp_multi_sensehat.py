@@ -25,8 +25,8 @@ sense.set_imu_config(True, True, True)
 # the interfaces that are pulled in to implement the device.
 # User has to know these values as these may change and user can
 # choose to implement different interfaces.
-thermostat_digital_twin_model_identifier = "dtmi:com:example:sensehat;1"
-device_info_digital_twin_model_identifier = "dtmi:azure:DeviceManagement:DeviceInformation;1"
+#thermostat_digital_twin_model_identifier = "dtmi:com:example:sensehat;1"
+#device_info_digital_twin_model_identifier = "dtmi:azure:DeviceManagement:DeviceInformation;1"
 
 # The device "TemperatureController" that is getting implemented using the above interfaces.
 # This id can change according to the company the user is from
@@ -225,14 +225,16 @@ async def execute_listener(
 async def execute_property_listener(device_client):
     while True:
         patch = await device_client.receive_twin_desired_properties_patch()  # blocking call
-        print(patch)
+        #print(patch)
         properties_dict = pnp_helper_preview_refresh.create_reported_properties_from_desired(patch)
         await device_client.patch_twin_reported_properties(properties_dict)
-        print(properties_dict['SenseHat']['led_color'].get('value', None))
-        print(properties_dict['RaspberryPi']['display_on_off'].get('value', None))
+        #print(properties_dict)
         
-        led = int( properties_dict['RaspberryPi']['display_on_off'].get('value', default),"0") + int( properties_dict['SenseHat']['led_color'].get('value', default),"0") 
-        print(led)
+        if "RaspberryPi" in properties_dict:
+            led = properties_dict.get('RaspberryPi').get('display_on_off').get('value')                 
+        else:
+            led = properties_dict.get('SenseHat').get('led_color').get('value')          
+            
         if led == 10:
             os.popen('vcgencmd display_power 0')
         elif led == 20:
@@ -254,7 +256,7 @@ async def execute_property_listener(device_client):
         else:
             sense.show_message("", back_colour=[0, 0, 0])    
    
-       
+
         
 
 
@@ -293,10 +295,10 @@ async def provision_device(provisioning_host, id_scope, registration_id, symmetr
 async def main():
     switch = os.getenv("IOTHUB_DEVICE_SECURITY_TYPE")
     if switch == "DPS":
-        provisioning_host = os.getenv("IOTHUB_DEVICE_DPS_ENDPOINT")
-        id_scope = os.getenv("IOTHUB_DEVICE_DPS_ID_SCOPE")
-        registration_id = os.getenv("IOTHUB_DEVICE_DPS_DEVICE_ID")
-        symmetric_key = os.getenv("IOTHUB_DEVICE_DPS_DEVICE_KEY")
+        provisioning_host = "global.azure-devices-provisioning.net"
+        id_scope = os.getenv("DPS_IDSCOPE")
+        registration_id = os.getenv("DPS_DEVICE_ID")
+        symmetric_key = os.getenv("DPS_SYMMETRIC_KEY")
 
         registration_result = await provision_device(
             provisioning_host, id_scope, registration_id, symmetric_key, model_id
