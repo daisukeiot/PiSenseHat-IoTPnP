@@ -25,6 +25,14 @@
     ```
    Add device conection string from your IoThub to last line
    ```bash
+   ### For DPS ### 
+   export IOTHUB_DEVICE_SECURITY_TYPE="DPS" 
+   export DPS_IDSCOPE="xxxxxxx" 
+   export DPS_DEVICE_ID="xxxxxxxxxxxxxxxxxxxxxxxxx" 
+   export DPS_SYMMETRIC_KEY="xxxxxxxxxxxxxxxxxxxxxxxxx" 
+
+   ### For Connecting String
+   export IOTHUB_DEVICE_SECURITY_TYPE="ConnectionString" 
    export IOTHUB_DEVICE_CONNECTION_STRING="HostName=xxxxxxxx;DeviceId=xxxxxxxxx;SharedAccessKey=xxxxxxxxxxxxxxxxxxxxxxxxxxx"
    ```
    Ctrl-o Y Save,

@@ -36,7 +36,7 @@ async def led_text_handler(values):
                 typecmd=values
             )
         )
-        sense.show_message(values, text_colour=[0, 255, 0])
+        sense.show_message(values, text_colour=[0, 255, 0]) # Green #
     print("Done")
 
 ###################################################
@@ -92,6 +92,10 @@ async def execute_command_listener(
 
 # END COMMAND LISTENERS
 #####################################################
+
+#####################################################
+# PROPERTY TASKS
+
 async def execute_property_listener(device_client):
     ignore_keys = ["__t", "$version"]
     while True:
@@ -132,6 +136,8 @@ async def execute_property_listener(device_client):
         else:
             sense.show_message("", back_colour=[0, 0, 0])
        
+#####################################################
+# COMMAND TASKS
 
 async def execute_listener(
     device_client,
@@ -211,8 +217,6 @@ def stdin_listener():
 
 # END KEYBOARD INPUT LISTENER
 #####################################################
-def change_led():
-    print("***")
 
 #####################################################
 # MAIN STARTS
@@ -230,7 +234,11 @@ async def provision_device(provisioning_host, id_scope, registration_id, symmetr
 async def main():
     switch = os.getenv("IOTHUB_DEVICE_SECURITY_TYPE")
     if switch == "DPS":
-        provisioning_host = "global.azure-devices-provisioning.net"
+        provisioning_host = (
+            os.getenv("IOTHUB_DEVICE_DPS_ENDPOINT")
+            if os.getenv("IOTHUB_DEVICE_DPS_ENDPOINT")
+            else "global.azure-devices-provisioning.net"
+        )
         id_scope = os.getenv("DPS_IDSCOPE")
         registration_id = os.getenv("DPS_DEVICE_ID")
         symmetric_key = os.getenv("DPS_SYMMETRIC_KEY")
@@ -240,19 +248,29 @@ async def main():
         )
 
         if registration_result.status == "assigned":
+            print("Device was assigned")
+            print(registration_result.registration_state.assigned_hub)
+            print(registration_result.registration_state.device_id)
             device_client = IoTHubDeviceClient.create_from_symmetric_key(
                 symmetric_key=symmetric_key,
                 hostname=registration_result.registration_state.assigned_hub,
                 device_id=registration_result.registration_state.device_id,
-                product_info=model_id
+                product_info=model_id,
             )
         else:
-            raise RuntimeError("Could not provision device. Aborting PNP device connection.")
-    else:
+            raise RuntimeError(
+                "Could not provision device. Aborting Plug and Play device connection."
+            )
+
+    elif switch == "ConnectionString":
         conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
         print("Connecting using Connection String " + conn_str)
         device_client = IoTHubDeviceClient.create_from_connection_string(
             conn_str, product_info=model_id
+        )
+    else:
+        raise RuntimeError(
+            "At least one choice needs to be made for complete functioning of this sample."
         )
 
     # Connect the client.
@@ -301,7 +319,7 @@ async def main():
             lsm9ds1_accelerometer_x = lsm9ds1_accelerometer['x']
             lsm9ds1_accelerometer_y = lsm9ds1_accelerometer['y']
             lsm9ds1_accelerometer_z = lsm9ds1_accelerometer['z']
-#           temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
+### For old model file ###     temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu": orientation_rad,"lsm9ds1_accelerometer": lsm9ds1_accelerometer,"lsm9ds1_gyroscope": lsm9ds1_gyroscope,"lsm9ds1_compass": lsm9ds1_compass}
             temperature_msg1 = {"temperature_hts221": temperature_hts221,"humidity": humidity,"temperature_lps25h": temperature_lps25h,"pressure": pressure,"imu_yaw": imu_yaw,"imu_roll": imu_roll,"imu_pitch": imu_pitch,"lsm9ds1_accelerometer_x": lsm9ds1_accelerometer_x,"lsm9ds1_accelerometer_y": lsm9ds1_accelerometer_y,"lsm9ds1_accelerometer_z": lsm9ds1_accelerometer_z,"lsm9ds1_gyroscope_x": lsm9ds1_gyroscope_x,"lsm9ds1_gyroscope_y": lsm9ds1_gyroscope_y,"lsm9ds1_gyroscope_z": lsm9ds1_gyroscope_z,"lsm9ds1_compass_x": lsm9ds1_compass_x,"lsm9ds1_compass_y": lsm9ds1_compass_y,"lsm9ds1_compass_z": lsm9ds1_compass_z}
             await send_telemetry_from_thermostat(device_client, temperature_msg1)
             await device_client.patch_twin_reported_properties({"manufacturer": "Pi Fundation"})
